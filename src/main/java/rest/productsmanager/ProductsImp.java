@@ -109,9 +109,26 @@ public class ProductsImp implements ProductsInterface {
 
 	@Path("/{id}")
 	@DELETE
-	public Product deleteProduct(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Product deleteProduct(@PathParam("id") Long id) {
+		EntityManager manager = JPAUtil.getEntityManager();
+		Product product = findById(manager, id);
+        try {
+        	
+        	if(product != null){
+        		manager.remove(product);
+        		manager.getTransaction().commit();
+        	}
+        	
+        	
+        } catch (Exception e) {
+            if (manager.getTransaction().isActive()) {
+            	manager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+        	manager.close();
+        }
+        return product;
 	}
 
 }

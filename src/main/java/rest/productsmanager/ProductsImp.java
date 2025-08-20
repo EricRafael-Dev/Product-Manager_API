@@ -19,10 +19,17 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class ProductsImp implements ProductsInterface {
 	
+	public Product findById(EntityManager manager, Long id){
+		manager.getTransaction().begin();
+		return manager.find(Product.class, id );
+				
+	}
+	
 	@GET
 	public List<Product> getProducts() {
 		EntityManager manager = JPAUtil.getEntityManager();
 		try {
+			manager.getTransaction().begin();
         	return manager.createQuery("SELECT product FROM Product product", Product.class).getResultList();
         	
         } catch (Exception e) {
@@ -41,7 +48,7 @@ public class ProductsImp implements ProductsInterface {
 	public Product findProduct(@PathParam("id") Long id) {
 		EntityManager manager = JPAUtil.getEntityManager();
 		try {
-        	return manager.find(Product.class, id );
+        	return findById(manager, id);
         	
         } catch (Exception e) {
             if (manager.getTransaction().isActive()) {
@@ -76,14 +83,33 @@ public class ProductsImp implements ProductsInterface {
 
 	@Path("/{id}")
 	@PUT
-	public Product updateProduct() {
-		// TODO Auto-generated method stub
-		return null;
+	public Product updateProduct(Product newProduct, @PathParam("id") Long id) {
+		EntityManager manager = JPAUtil.getEntityManager();
+		Product product = findById(manager, id);
+        try {
+        	
+        	if(product != null){
+        		product.setName(newProduct.getName());
+        		product.setValor(newProduct.getValor());
+        		product.setQuantity(newProduct.getQuantity());
+        		manager.getTransaction().commit();
+        	}
+        	
+        	
+        } catch (Exception e) {
+            if (manager.getTransaction().isActive()) {
+            	manager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+        	manager.close();
+        }
+		return product;
 	}
 
 	@Path("/{id}")
 	@DELETE
-	public Product deleteProduct() {
+	public Product deleteProduct(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

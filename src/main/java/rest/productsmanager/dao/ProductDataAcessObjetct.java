@@ -86,10 +86,17 @@ public class ProductDataAcessObjetct {
 		
 		Product product = findById(manager, id);
         try {
+        	System.out.println(product);
         	if(product != null){
-        		product.setName(newProduct.getName());
-        		product.setValor(newProduct.getValor());
-        		product.setQuantity(newProduct.getQuantity());
+        		if(newProduct.getName() != null && !newProduct.getName().isEmpty()){
+        			product.setName(newProduct.getName());
+        		}
+        		if(newProduct.getValor() != null){
+        			product.setValor(newProduct.getValor());;
+        		}
+        		if(newProduct.getQuantity() != null){
+        			product.setQuantity(newProduct.getQuantity());
+        		}
         		manager.getTransaction().commit();
         		return product;
         	}

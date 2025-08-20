@@ -36,13 +36,13 @@ public class Product {
 	public void validate() throws ProductException{
 		String err = "";
 		if(name == null || name.isEmpty()){
-			err += "Nome obrigatorio; \n";
+			err += "'name' obrigatorio; \n";
 		}
 		if(valor == null){
-			err += "Valor obrigatorio; \n";
+			err += "'valor' obrigatorio; \n";
 		}
 		if(quantity == null){
-			err += "Quantidade obrigatoria; \n";
+			err += "'quantity' obrigatoria; \n";
 		}
 		
 		if (!err.isEmpty()){

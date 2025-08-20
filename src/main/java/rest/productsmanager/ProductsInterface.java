@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+import rest.productsmanager.exception.ProductException;
+import rest.productsmanager.model.Product;
+
 public interface ProductsInterface {
-	public List<Product> getProducts();
-	public Product findProduct(Long id);
-	public void addProduct(Product product);	
-	public Product updateProduct(Product product, Long id);
-	public Product deleteProduct(Long id);
+	List<Product> getProducts() throws ProductException;
+	Response findProduct(Long id) throws ProductException;
+	Response addProduct(Product product) throws ProductException;	
+	Response updateProduct(Product product, Long id) throws ProductException;
+	Response deleteProduct(Long id) throws ProductException;
 }

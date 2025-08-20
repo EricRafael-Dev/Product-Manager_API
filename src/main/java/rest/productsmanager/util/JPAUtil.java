@@ -1,4 +1,4 @@
-package rest.productsmanager;
+package rest.productsmanager.util;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

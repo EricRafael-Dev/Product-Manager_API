@@ -6,7 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import rest.productsmanager.exception.ProductException;
 
 @Entity
 @XmlRootElement
@@ -29,6 +33,22 @@ public class Product {
 	}
 
 
+	public void validate() throws ProductException{
+		String err = "";
+		if(name == null || name.isEmpty()){
+			err += "Nome obrigatorio; \n";
+		}
+		if(valor == null){
+			err += "Valor obrigatorio; \n";
+		}
+		if(quantity == null){
+			err += "Quantidade obrigatoria; \n";
+		}
+		
+		if (!err.isEmpty()){
+			throw new ProductException(err, Response.Status.BAD_REQUEST);
+		}
+	}
 	public Long getId() {
 		return id;
 	}

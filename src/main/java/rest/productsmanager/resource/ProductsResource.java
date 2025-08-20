@@ -51,7 +51,7 @@ public class ProductsResource implements ProductsInterface {
 	
 	@POST
 	public Response addProduct(Product newProduct) throws ProductException {
-		
+		newProduct.validate();
 		Product product = new ProductDataAcessObjetct().save(newProduct);
 		return Response.ok()
     			.entity(product)

@@ -10,10 +10,10 @@ import javax.ws.rs.ext.Provider;
 public class ProductExceptionMapper implements ExceptionMapper<ProductException> {
 
 	public Response toResponse(ProductException exception) {
-		return Response.status(Status.NOT_FOUND)
+		Response.Status status = exception.getStatus();
+		return Response.status(status)
 				.type(MediaType.APPLICATION_JSON)
 				.entity(exception.getMessage())
 				.build();
 	}
-	
 }

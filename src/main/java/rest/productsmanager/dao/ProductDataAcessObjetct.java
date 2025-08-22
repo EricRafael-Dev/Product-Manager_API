@@ -16,13 +16,18 @@ public class ProductDataAcessObjetct {
 		return manager.find(Product.class, id);
 	}
 	
-	public List<Product> list(){
+	public List<Product> list(String name){
 		
 		EntityManager manager = JPAUtil.getEntityManager();
-		
+		List<Product> products;
 		try {
 			manager.getTransaction().begin();
-			List<Product> products = manager.createQuery("SELECT product FROM Product product", Product.class).getResultList();
+			if(!name.isEmpty()){
+				products = manager.createQuery("SELECT product FROM Product product WHERE name = :name", Product.class).setParameter("name", name).getResultList();				
+
+			}else{
+				products = manager.createQuery("SELECT product FROM Product product", Product.class).getResultList();				
+			}
         	return products;
         	
         } catch (Exception e) {

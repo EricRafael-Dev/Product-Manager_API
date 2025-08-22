@@ -15,6 +15,7 @@ import rest.productsmanager.exception.ProductException;
 @Entity
 @XmlRootElement
 public class Product {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Long id;
@@ -40,11 +41,16 @@ public class Product {
 		}
 		if(valor == null){
 			err += "'valor' obrigatorio; \n";
-		}
+			
+		}else if(valor.compareTo(BigDecimal.ZERO) == -1){
+				err += "'valor' nao pode ser negativo. \n";
+			}
 		if(quantity == null){
 			err += "'quantity' obrigatoria; \n";
-		}
-		
+			
+		}else if(quantity < 0){
+				err += "'quantity' nao pode ser negativo. \n";
+			}
 		if (!err.isEmpty()){
 			throw new ProductException(err, Response.Status.BAD_REQUEST);
 		}

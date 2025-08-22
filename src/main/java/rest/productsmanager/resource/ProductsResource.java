@@ -20,6 +20,7 @@ import rest.productsmanager.ProductsInterface;
 import rest.productsmanager.dao.ProductDataAcessObjetct;
 import rest.productsmanager.exception.ProductException;
 import rest.productsmanager.model.Product;
+import rest.productsmanager.model.Report;
 
 @Path("/product")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -34,9 +35,9 @@ public class ProductsResource implements ProductsInterface {
 	
 	// Rota GET: Listar Produtos -> "/product"
 	// QueryParams: 
-		// 'Name' -> Retorna um Produto pelo 'name';
+		// 'Name'   -> Retorna um Produto pelo 'name';
 		// 'Lenght' -> Limita a quantidade de produtos em cada página;
-		// 'Page' -> Controla em qual página o cliente se encontra;
+		// 'Page'   -> Controla em qual página o cliente se encontra;
 	@GET
 	public List<Product> getProducts(@QueryParam("name") @DefaultValue("") String name,
 			@QueryParam("lenght") @DefaultValue("20") Integer lenght,
@@ -45,16 +46,6 @@ public class ProductsResource implements ProductsInterface {
 		return products;
 	}
 	
-	
-	// Rota POST: Adicionar Produtos -> "/product"
-	@POST
-	public Response addProduct(Product newProduct) throws ProductException {
-		newProduct.validate();
-		Product product = new ProductDataAcessObjetct().save(newProduct);
-		return Response.ok()
-    			.entity(product)
-    			.build();
-    }
 
 	// Rota GET: Encontrar Produto através do ID -> "/product/[id]"
 	@Path("/{id}")
@@ -70,6 +61,25 @@ public class ProductsResource implements ProductsInterface {
     			.build();
 	}
 
+	
+	@Path("/report")
+	@GET
+	public Report getReport() throws ProductException {
+		Report report = new ProductDataAcessObjetct().report();
+		return report;
+	}
+	
+	
+	// Rota POST: Adicionar Produtos -> "/product"
+	@POST
+	public Response addProduct(Product newProduct) throws ProductException {
+		newProduct.validate();
+		Product product = new ProductDataAcessObjetct().save(newProduct);
+		return Response.ok()
+				.entity(product)
+				.build();
+	}
+	
 	
 	// Rota PUT: Atualizar Produto através do ID -> "/product/[id]"
 	@Path("/{id}")

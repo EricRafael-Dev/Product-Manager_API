@@ -1,10 +1,12 @@
 package rest.productsmanager.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import rest.productsmanager.model.Product;
+import rest.productsmanager.model.Report;
 import rest.productsmanager.util.JPAUtil;
 
 public class ProductDataAcessObjetct {
@@ -66,6 +68,41 @@ public class ProductDataAcessObjetct {
 		return null;
 	}
 	
+	public Report report(){
+		
+		EntityManager manager = JPAUtil.getEntityManager();
+		Report report = new Report();
+		
+		try {
+			manager.getTransaction().begin();
+			
+			Long totalQuantity = manager.createQuery("SELECT COUNT(product) FROM Product product", Long.class)
+					.getSingleResult();
+			report.setTotalQuantity(totalQuantity);
+			
+			BigDecimal  maxPrice = manager.createQuery("SELECT COALESCE(SUM (product.valor*product.quantity)) FROM Product product", BigDecimal.class)
+					.getSingleResult();
+			report.setMaxPrice(maxPrice);
+			
+			List<Product> expensiveProduct = manager.createQuery("SELECT product FROM Product product ORDER BY product.valor DESC", Product.class)
+					.setMaxResults(1)
+					.getResultList();
+			report.setExpensiveProduct(expensiveProduct);
+			
+        	return report;
+        	
+        } catch (Exception e) {
+            if (manager.getTransaction().isActive()) {
+            	manager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            
+        } finally {
+        	manager.close();
+        }
+		return null;
+	}
+	
 	public Product save(Product product){
 		
 		EntityManager manager = JPAUtil.getEntityManager();
@@ -94,7 +131,6 @@ public class ProductDataAcessObjetct {
 		
 		Product product = findById(manager, id);
         try {
-        	System.out.println(product);
         	if(product != null){
         		if(newProduct.getName() != null && !newProduct.getName().isEmpty()){
         			product.setName(newProduct.getName());

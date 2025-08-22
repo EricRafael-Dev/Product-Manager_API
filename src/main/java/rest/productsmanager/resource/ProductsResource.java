@@ -15,7 +15,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import rest.productsmanager.ProductsInterface;
 import rest.productsmanager.dao.ProductDataAcessObjetct;
@@ -33,16 +32,21 @@ public class ProductsResource implements ProductsInterface {
 	}
 	
 	
-	//Rota GET: Listar Produtos -> "/product"
-	//QueryParams: Retorna um Produto pelo 'name'
+	// Rota GET: Listar Produtos -> "/product"
+	// QueryParams: 
+		// 'Name' -> Retorna um Produto pelo 'name';
+		// 'Lenght' -> Limita a quantidade de produtos em cada página;
+		// 'Page' -> Controla em qual página o cliente se encontra;
 	@GET
-	public List<Product> getProducts(@QueryParam("name") @DefaultValue("") String name) throws ProductException {
-		List<Product> products = new ProductDataAcessObjetct().list(name);
+	public List<Product> getProducts(@QueryParam("name") @DefaultValue("") String name,
+			@QueryParam("lenght") @DefaultValue("20") Integer lenght,
+			@QueryParam("page") @DefaultValue("0") Integer page) throws ProductException {
+		List<Product> products = new ProductDataAcessObjetct().list(name, lenght, page);
 		return products;
 	}
 	
 	
-	//Rota POST: Adicionar Produtos -> "/product"
+	// Rota POST: Adicionar Produtos -> "/product"
 	@POST
 	public Response addProduct(Product newProduct) throws ProductException {
 		newProduct.validate();
@@ -52,7 +56,7 @@ public class ProductsResource implements ProductsInterface {
     			.build();
     }
 
-	//Rota GET: Encontrar Produto através do ID -> "/product/[id]"
+	// Rota GET: Encontrar Produto através do ID -> "/product/[id]"
 	@Path("/{id}")
 	@GET
 	public Response findProduct(@PathParam("id") Long id) throws ProductException {
@@ -67,7 +71,7 @@ public class ProductsResource implements ProductsInterface {
 	}
 
 	
-	//Rota PUT: Atualizar Produto através do ID -> "/product/[id]"
+	// Rota PUT: Atualizar Produto através do ID -> "/product/[id]"
 	@Path("/{id}")
 	@PUT
 	public Response updateProduct(Product newProduct, @PathParam("id") Long id) throws ProductException {
@@ -81,7 +85,7 @@ public class ProductsResource implements ProductsInterface {
 	}
 
 	
-	//Rota DELETE: Deletar Produto através do ID -> "/product/[id]"
+	// Rota DELETE: Deletar Produto através do ID -> "/product/[id]"
 	@Path("/{id}")
 	@DELETE
 	public Response deleteProduct(@PathParam("id") Long id) throws ProductException {

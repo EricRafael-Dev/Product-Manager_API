@@ -9,24 +9,27 @@ import rest.productsmanager.util.JPAUtil;
 
 public class ProductDataAcessObjetct {
 	
-	private static final int Product = 0;
-
 	public Product findById(EntityManager manager, Long id){
 		manager.getTransaction().begin();
 		return manager.find(Product.class, id);
 	}
 	
-	public List<Product> list(String name){
+	public List<Product> list(String name, Integer lenght, Integer page){
 		
 		EntityManager manager = JPAUtil.getEntityManager();
 		List<Product> products;
 		try {
 			manager.getTransaction().begin();
 			if(!name.isEmpty()){
-				products = manager.createQuery("SELECT product FROM Product product WHERE name = :name", Product.class).setParameter("name", name).getResultList();				
+				products = manager.createQuery("SELECT product FROM Product product WHERE name = :name", Product.class)
+						.setParameter("name", name)
+						.getResultList();				
 
 			}else{
-				products = manager.createQuery("SELECT product FROM Product product", Product.class).getResultList();				
+				products = manager.createQuery("SELECT product FROM Product product", Product.class)
+						.setFirstResult(page*lenght)
+						.setMaxResults(lenght)
+						.getResultList();				
 			}
         	return products;
         	

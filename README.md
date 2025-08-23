@@ -1,4 +1,4 @@
-# API de Gestão de Produtos - Desafio Java
+# API de Gestão de Produtos
 
 ## 1. Visão Geral
 

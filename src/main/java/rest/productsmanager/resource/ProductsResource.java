@@ -25,7 +25,7 @@ import rest.productsmanager.model.Product;
 import rest.productsmanager.model.ProductDTO;
 import rest.productsmanager.model.Report;
 
-@Path("/product")
+@Path("/products")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ProductsResource implements ProductsInterface {

@@ -6,16 +6,16 @@ import java.util.Map;
 public class ErrorResponseDTO {
 
     private int status;
-    private String mensagem;
+    private String message;
     private LocalDateTime timestamp;
-    private Map<String, String> detalhes;
+    private Map<String, String> details;
 
     public ErrorResponseDTO(){
     }
     
-    public ErrorResponseDTO(int status, String mensagem) {
+    public ErrorResponseDTO(int status, String message) {
         this.status = status;
-        this.mensagem = mensagem;
+        this.message = message;
         this.timestamp = LocalDateTime.now();
     }
 
@@ -27,12 +27,12 @@ public class ErrorResponseDTO {
         this.status = status;
     }
 
-    public String getMensagem() {
-        return mensagem;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public LocalDateTime getTimestamp() {
@@ -43,11 +43,11 @@ public class ErrorResponseDTO {
         this.timestamp = timestamp;
     }
 
-    public Map<String, String> getDetalhes() {
-        return detalhes;
+    public Map<String, String> getDetails() {
+        return details;
     }
 
-    public void setDetalhes(Map<String, String> detalhes) {
-        this.detalhes = detalhes;
+    public void setDetails(Map<String, String> details) {
+        this.details = details;
     }
 }

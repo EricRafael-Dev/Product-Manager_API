@@ -1,7 +1,5 @@
 package rest.productsmanager.exception;
 
-import java.util.Collections;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -14,10 +12,12 @@ public class ProductExceptionMapper implements ExceptionMapper<ProductException>
     public Response toResponse(ProductException exception) {
     	Response.Status status = exception.getStatus(); 
     	int statusCode = status.getStatusCode();
-        
+
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(statusCode, exception.getMessage());
-        errorResponse.setDetalhes(Collections.emptyMap());
-        
+        if (exception.getDetails() != null) {
+            errorResponse.setDetails(exception.getDetails());
+        }
         return Response.status(status).entity(errorResponse).build();
+
     }
 }

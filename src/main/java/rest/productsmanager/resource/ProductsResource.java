@@ -57,7 +57,7 @@ public class ProductsResource implements ProductsInterface {
 		Product product = new ProductDataAcessObjetct().find(id);
 		
 		if(product == null){
-			throw new ProductException("Produto nao encontrado...");
+			throw new ProductException("Produto com ID " + id + " não foi encontrado.", Response.Status.NOT_FOUND);
 			}
         return Response.ok()
     			.entity(product)
@@ -99,7 +99,7 @@ public class ProductsResource implements ProductsInterface {
 	public Response updateProduct(Product newProduct, @PathParam("id") Long id) throws ProductException {
 		Product product = new ProductDataAcessObjetct().update(newProduct, id);
 		if(product == null){
-			throw new ProductException("Produto nao encontrado...");
+			throw new ProductException("Produto com ID " + id + " não foi encontrado.", Response.Status.NOT_FOUND);
 			}
         return Response.ok()
     			.entity(product)
@@ -116,7 +116,7 @@ public class ProductsResource implements ProductsInterface {
 			return Response.status(Status.NO_CONTENT)
     			.build();
 		}
-		throw new ProductException("Produto nao encontrado...");
+		throw new ProductException("Produto com ID " + id + " não foi encontrado.", Response.Status.NOT_FOUND);
 	}
 
 }

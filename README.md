@@ -40,7 +40,7 @@ git clone https://github.com/EricRafael-Dev/Product-Manager_API
 
 2. **Configure o Banco de Dados:**
 
-* Crie um banco de dados no PostgreSQL chamado `desafio_db`.
+* Crie um banco de dados no PostgreSQL com o nome que preferir.
 * Abra o arquivo `src/main/resources/META-INF/persistence.xml` e configure seu `username` e `password`.
 
 3. **Compile o Projeto:**
@@ -81,18 +81,18 @@ Usado para criar ou atualizar um produto.
 
 **URL base para todos os endpoints:** `http://localhost:8080/products`
 
-### 5.1. Produtos
+### - Produtos
 
-### Listar Produtos
+### * Listar Produtos
 
 Retorna uma lista de produtos com suporte a filtro por nome e paginação.
 
 * **Endpoint:** `GET /products`
 * **Parâmetros de Query:**
 
-  * `name` (String, opcional): Filtra produtos pelo nome exato.
+  * `name` (String, opcional): Filtra produtos através do nome.
   * `length` (Integer, opcional, padrão: 20): Define o número de itens por página.
-  * `page` (Integer, opcional, padrão: 0): Define a página a ser retornada.
+  * `page` (Integer, opcional, padrão: 0): Define a página atual.
 
 **Exemplo de Resposta de Sucesso (200 OK):**
 
@@ -113,9 +113,9 @@ Retorna uma lista de produtos com suporte a filtro por nome e paginação.
 ]
 ```
 
-### Buscar Produto por ID
+### * Buscar Produto por ID
 
-Recupera um único produto pelo seu ID.
+Procura um único produto pelo seu ID.
 
 * **Endpoint:** `GET /products/{id}`
 
@@ -130,7 +130,7 @@ Recupera um único produto pelo seu ID.
 }
 ```
 
-### Criar um Novo Produto
+### * Criar um Novo Produto
 
 Adiciona um novo produto ao catálogo.
 
@@ -157,7 +157,7 @@ Adiciona um novo produto ao catálogo.
 }
 ```
 
-### Atualizar um Produto
+### * Atualizar um Produto
 
 Atualiza os dados de um produto existente.
 
@@ -184,18 +184,18 @@ Atualiza os dados de um produto existente.
 }
 ```
 
-### Deletar um Produto
+### * Deletar um Produto
 
-Remove um produto do catálogo.
+Deleta um produto do catálogo.
 
 * **Endpoint:** `DELETE /products/{id}`
 
 **Resposta de Sucesso (204 No Content):**
 Resposta vazia, indicando sucesso.
 
-### 5.2. Relatórios
+### - Relatórios
 
-### Obter Relatório de Estoque
+### * Obter Relatório de Estoque
 
 Retorna um relatório consolidado com dados sobre o catálogo.
 
@@ -228,7 +228,7 @@ Retorna um relatório consolidado com dados sobre o catálogo.
 
 ## 6. Padrão de Resposta de Erro
 
-Todas as respostas de erro da API seguem um formato JSON padronizado para facilitar o tratamento pelo cliente.
+Todas as respostas de erro da API seguem um formato JSON padronizado para tratamento por parte do cliente.
 
 **Exemplo de Erro 404 (Não Encontrado):**
 

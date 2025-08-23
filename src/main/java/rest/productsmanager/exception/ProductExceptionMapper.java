@@ -1,19 +1,23 @@
 package rest.productsmanager.exception;
 
-import javax.ws.rs.core.MediaType;
+import java.util.Collections;
+
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import rest.productsmanager.model.ErrorResponseDTO;
 
 @Provider
 public class ProductExceptionMapper implements ExceptionMapper<ProductException> {
 
-	public Response toResponse(ProductException exception) {
-		Response.Status status = exception.getStatus();
-		return Response.status(status)
-				.type(MediaType.APPLICATION_JSON)
-				.entity(exception.getMessage())
-				.build();
-	}
+    @Override
+    public Response toResponse(ProductException exception) {
+    	Response.Status status = exception.getStatus(); 
+    	int statusCode = status.getStatusCode();
+        
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(statusCode, exception.getMessage());
+        errorResponse.setDetalhes(Collections.emptyMap());
+        
+        return Response.status(status).entity(errorResponse).build();
+    }
 }

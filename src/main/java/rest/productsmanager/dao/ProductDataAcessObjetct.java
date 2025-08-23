@@ -16,7 +16,7 @@ public class ProductDataAcessObjetct {
 		return manager.find(Product.class, id);
 	}
 	
-	public List<Product> list(String name, Integer lenght, Integer page){
+	public List<Product> list(String name, Integer length, Integer page){
 		
 		EntityManager manager = JPAUtil.getEntityManager();
 		List<Product> products;
@@ -29,8 +29,8 @@ public class ProductDataAcessObjetct {
 
 			}else{
 				products = manager.createQuery("SELECT product FROM Product product", Product.class)
-						.setFirstResult(page*lenght)
-						.setMaxResults(lenght)
+						.setFirstResult(page*length)
+						.setMaxResults(length)
 						.getResultList();				
 			}
         	return products;
@@ -88,6 +88,11 @@ public class ProductDataAcessObjetct {
 					.setMaxResults(1)
 					.getResultList();
 			report.setExpensiveProduct(expensiveProduct);
+			
+			List<Product> cheapestProduct = manager.createQuery("SELECT product FROM Product product ORDER BY product.valor ASC", Product.class)
+					.setMaxResults(1)
+					.getResultList();
+			report.setCheapestProduct(cheapestProduct);
 			
         	return report;
         	

@@ -33,28 +33,6 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-
-	public void validate() throws ProductException{
-		String err = "";
-		if(name == null || name.isEmpty()){
-			err += "'name' obrigatorio; \n";
-		}
-		if(valor == null){
-			err += "'valor' obrigatorio; \n";
-			
-		}else if(valor.compareTo(BigDecimal.ZERO) == -1){
-				err += "'valor' nao pode ser negativo. \n";
-			}
-		if(quantity == null){
-			err += "'quantity' obrigatoria; \n";
-			
-		}else if(quantity < 0){
-				err += "'quantity' nao pode ser negativo. \n";
-			}
-		if (!err.isEmpty()){
-			throw new ProductException(err, Response.Status.BAD_REQUEST);
-		}
-	}
 	public Long getId() {
 		return id;
 	}

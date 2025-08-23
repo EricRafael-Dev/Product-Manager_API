@@ -7,16 +7,18 @@ public class Report {
 	private Long totalQuantity;
 	private BigDecimal maxPrice;
 	private List<Product> expensiveProduct;
+	private List<Product> cheapestProduct;
 	
 	public Report(){
 		
 	}
 
-	public Report(Long totalQuantity, BigDecimal maxPrice, List<Product> expensiveProduct) {
+	public Report(Long totalQuantity, BigDecimal maxPrice, List<Product> expensiveProduct, List<Product> cheapestProduct) {
 		super();
 		this.totalQuantity = totalQuantity;
 		this.maxPrice = maxPrice;
 		this.expensiveProduct = expensiveProduct;
+		this.cheapestProduct = cheapestProduct;
 	}
 
 	public Long getTotalQuantity() {
@@ -41,6 +43,14 @@ public class Report {
 
 	public void setExpensiveProduct(List<Product> expensiveProduct) {
 		this.expensiveProduct = expensiveProduct;
+	}
+	
+	public List<Product> getCheapestProduct() {
+		return cheapestProduct;
+	}
+	
+	public void setCheapestProduct(List<Product> cheapestProduct) {
+		this.cheapestProduct = cheapestProduct;
 	}
 
 }
